@@ -130,7 +130,7 @@ class Character extends MovableObject {
             if (this.isWaiting()) {
                 this.playAnimation(this.IMAGES_WAITING);
                 this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
-                if (this.timer >= 4000) { // Überprüfe, ob 4 Sekunden vorbei sind
+                if (this.timer >= 5000) { // Überprüfe, ob 4 Sekunden vorbei sind
                     this.playAnimation(this.IMAGES_SLEEPING);
                 }
             } else {

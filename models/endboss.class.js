@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
     speed = 5;
     height = 1045 / 2.5;
     width = 1217 / 2.5;
-    // bossHealth = 5;
+    energy = 25;
     timer = 0;
     isActivated = false;
 
@@ -56,8 +56,6 @@ class Endboss extends MovableObject {
         this.loadImages(this.BOSS_DEAD);
 
         this.x = 1700;
-        // this.speed = 0.25 + Math.random() * 0.4;
-
         this.animate();
     }
 
@@ -65,8 +63,8 @@ class Endboss extends MovableObject {
     animate() {
 
         setInterval(() => {
-
             if (this.isDead()) {
+                this.isActivated = false;
                 this.playAnimation(this.BOSS_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.BOSS_HURTING);

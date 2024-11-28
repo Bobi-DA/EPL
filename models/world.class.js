@@ -51,7 +51,7 @@ class World {
                 if (this.endboss.isColliding(bottle)) {
                     console.log('world.class.js: Endboss ist getroffen');
                     this.endboss.hit();
-                    this.statusBarEndboss.setPercentage(this.endboss.bossHealth);
+                    this.statusBarEndboss.setPercentage(this.endboss.energy);
                 }
             });
     }
