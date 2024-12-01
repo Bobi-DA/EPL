@@ -8,7 +8,6 @@ const level1 = new Level(       //globale Konstante
         // new MiniChicken(),
         // new MiniChicken(),
         // new MiniChicken(),
-        new Endboss()
     ],
 
     [

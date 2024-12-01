@@ -6,6 +6,8 @@ class Endboss extends MovableObject {
     energy = 25;
     timer = 0;
     isActivated = false;
+    isAttacking = false;
+
 
     BOSS_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -55,6 +57,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.BOSS_HURTING);
         this.loadImages(this.BOSS_DEAD);
 
+
         this.x = 1700;
         this.animate();
     }
@@ -64,23 +67,37 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
+                console.log(this.BOSS_DEAD);
                 this.isActivated = false;
                 this.playAnimation(this.BOSS_DEAD);
+                console.log('Boss ist dead!!!');
             } else if (this.isHurt()) {
                 this.playAnimation(this.BOSS_HURTING);
             } else if (this.characterMeetEndboss()) {
                 this.playAnimation(this.BOSS_ALERT);
-                this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
-                if (this.timer >= 5000) { // Überprüfe, ob 4 Sekunden vorbei sind
-                    this.activateBoss();
-                }
-            }
-            if (this.isActivated) {
-                this.moveLeft();
-                this.playAnimation(this.BOSS_WALKING);
+            } else if (this.isAttacking) {
                 this.playAnimation(this.BOSS_ATTACKING);
+            } else {
+                this.playAnimation(this.BOSS_WALKING);
             }
         }, 160);
-    }
-}
 
+        setInterval(() => {
+            if (this.isActivated) {
+                this.moveLeft();
+            }
+        }, 200);
+
+    }
+
+
+    bossAttack() {
+        if (!this.isAttacking && this.isHurt()) {
+            this.isAttacking = true;
+            setTimeout(() => {
+                this.isAttacking = false;
+            }, 2000);
+        }
+    }
+
+};

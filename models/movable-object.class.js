@@ -45,11 +45,11 @@ class MovableObject extends DrawableObject {
     }
 
     characterMeetEndboss() {
-        if (world.character.x > 1300) {
-            return true;
-        } else{
-            return false;
+        if (!world || !world.character) {
+            // console.warn("world oder character ist nicht definiert!");
+            return false; // Fehler abfangen und `false` zurückgeben
         }
+        return world.character.x > 1300;
     }
 
     activateBoss() {
@@ -65,7 +65,7 @@ class MovableObject extends DrawableObject {
 
 
     isDead() {
-        return this.energy == 0;
+        return this.energy <= 0;
     }
 
     isWaiting() {

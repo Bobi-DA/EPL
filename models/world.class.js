@@ -49,7 +49,6 @@ class World {
     collisionBottleWithChicken() {
             this.throwableObject.forEach(bottle => {
                 if (this.endboss.isColliding(bottle)) {
-                    console.log('world.class.js: Endboss ist getroffen');
                     this.endboss.hit();
                     this.statusBarEndboss.setPercentage(this.endboss.energy);
                 }
@@ -96,6 +95,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
 
         this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.endboss);
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObject);
 
