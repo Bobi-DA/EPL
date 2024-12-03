@@ -6,11 +6,6 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);    // In dieser Variable wird das neue Objekt gespeichert, das aus der Klasse 'World' erstellt wird.
 
-
-
-    console.log('games.js: ',world);
-
-
     window.addEventListener("keydown", (event) => {
         if (event.code == 'ArrowLeft') {
             keyboard.LEFT = true;

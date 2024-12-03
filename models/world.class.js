@@ -34,6 +34,7 @@ class World {
             this.collisionCharacterWithCoins();
             this.checkThrowObjects();
             this.collisionBottleWithChicken();
+            this.checkCollisionsWithEndboss();
         }, 200);
     }
 
@@ -45,6 +46,13 @@ class World {
             }
         });
     }
+
+    checkCollisionsWithEndboss() {
+            if (this.character.isColliding(this.endboss)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        };
 
     collisionBottleWithChicken() {
             this.throwableObject.forEach(bottle => {

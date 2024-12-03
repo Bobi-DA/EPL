@@ -49,12 +49,11 @@ class MovableObject extends DrawableObject {
             // console.warn("world oder character ist nicht definiert!");
             return false; // Fehler abfangen und `false` zurückgeben
         }
-        return world.character.x > 1300;
+        return world.character.x > 1200;
     }
 
     activateBoss() {
-        this.isActivated = true; // Endboss wird aktiviert
-        // console.log('Endboss aktiviert!');
+        return this.isActivated = true; // Endboss wird aktiviert
     }
 
     isHurt() {
