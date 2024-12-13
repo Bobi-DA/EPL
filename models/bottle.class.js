@@ -5,7 +5,7 @@ class Bottles extends MovableObject {
 
     BOTTLE_GROUND = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
-    ]
+    ];
 
     constructor(imagePath, x) {
         super().loadImage(imagePath);
@@ -13,10 +13,9 @@ class Bottles extends MovableObject {
     }
 
     animate() {
-
         setInterval(() => {
             this.playAnimation(this.BOTTLE_GROUND);
         }, 160);
-
     }
+    
 }

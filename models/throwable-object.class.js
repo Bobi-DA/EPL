@@ -23,8 +23,18 @@ class ThrowableObject extends MovableObject {
         this.x = x;
         this.y = y;
         this.loadImages(this.BOTTLE_THROWING);
-        this.throw();
+        this.loadImages(this.BOTTLE_SPLASHING);
+        // this.throw();
+        this.animation();
+    }
 
+    animation() {
+
+        if (this.x > world.endboss.x) {
+            this.splashing();
+        } else {
+            this.throw();
+        }
     }
 
     throw() {
@@ -34,6 +44,12 @@ class ThrowableObject extends MovableObject {
         setInterval(() => {
             this.playAnimation(this.BOTTLE_THROWING);
             this.x += 10;
+        }, 30);
+    }
+
+    splashing() {
+        setInterval(() => {
+            this.playAnimation(this.BOTTLE_SPLASHING);
         }, 30);
     }
 }

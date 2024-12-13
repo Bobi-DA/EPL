@@ -44,7 +44,8 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    characterMeetEndboss() {
+
+    characterMeetsEndboss() {
         if (!world || !world.character) {
             // console.warn("world oder character ist nicht definiert!");
             return false; // Fehler abfangen und `false` zurückgeben
@@ -53,7 +54,7 @@ class MovableObject extends DrawableObject {
     }
 
     activateBoss() {
-        return this.isActivated = true; // Endboss wird aktiviert
+        return this.bossIsActivated = true; // Endboss wird aktiviert
     }
 
     isHurt() {
@@ -61,7 +62,6 @@ class MovableObject extends DrawableObject {
         timepassed = timepassed / 1000;
         return timepassed < 0.5;
     }
-
 
     isDead() {
         return this.energy <= 0;
@@ -72,8 +72,6 @@ class MovableObject extends DrawableObject {
             return true;
         }
     }
-
-
 
     playAnimation(images) {
         let i = this.currentImage % images.length;

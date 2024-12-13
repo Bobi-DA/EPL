@@ -5,8 +5,11 @@ class Endboss extends MovableObject {
     width = 1217 / 2.5;
     energy = 50;
     timer = 0;
-    isActivated = false;
+    bossIsActivated = false;
     isAttacking = false;
+    alertPlayedOff = false;
+    activateBossAttack = false;
+    isStatusBarVisible = false;
 
 
     BOSS_WALKING = [
@@ -67,12 +70,18 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.isActivated = false;
+                this.bossIsActivated = false;
                 this.playAnimation(this.BOSS_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.BOSS_HURTING);
-            } else if (this.characterMeetEndboss()) {
+            } else if (this.characterMeetsEndboss() && !this.alertPlayedOff) {
+                this.isStatusBarVisible = true;
                 this.playAnimation(this.BOSS_ALERT);
+                setTimeout(() => {
+                    this.alertPlayedOff = true;
+                    this.activateBossAttack = true;
+                }, 2000);
+            } else if (this.activateBossAttack && !this.isAttacking) {
                 this.bossAttack();
             } else if (this.isAttacking) {
                 this.playAnimation(this.BOSS_ATTACKING);
@@ -82,7 +91,7 @@ class Endboss extends MovableObject {
         }, 160);
 
         setInterval(() => {
-            if (this.isActivated) {
+            if (this.bossIsActivated) {
                 this.moveLeft();
             }
         }, 250);
@@ -93,12 +102,9 @@ class Endboss extends MovableObject {
     bossAttack() {
         if (!this.isAttacking && this.activateBoss()) {
             this.isAttacking = true;
-            console.log('vor setTimout',this.isAttacking);
             setTimeout(() => {
-                console.log('im setTimout',this.isAttacking);
                 this.isAttacking = false;
-            }, 5000);
-            console.log('nach setTimout',this.isAttacking);
+            }, 3000);
         }
     }
 
