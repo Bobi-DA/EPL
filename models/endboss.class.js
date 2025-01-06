@@ -52,6 +52,10 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
+
+    chicken_sound = new Audio('audio/chicken.mp3');
+    game_won_sound = new Audio('audio/game_won.mp3');
+
     constructor() {
         super().loadImage(this.BOSS_ALERT[7]);
         this.loadImages(this.BOSS_ALERT);
@@ -69,11 +73,19 @@ class Endboss extends MovableObject {
     animate() {
 
         setInterval(() => {
+            this.chicken_sound.pause();
+
             if (this.isDead()) {
                 this.bossIsActivated = false;
                 this.playAnimation(this.BOSS_DEAD);
+                this.gameWon();
+                this.game_won_sound.play();
+                setTimeout(() => {
+                    this.clearAllIntervals();
+                }, 1000);
             } else if (this.isHurt()) {
                 this.playAnimation(this.BOSS_HURTING);
+                this.chicken_sound.play();
             } else if (this.characterMeetsEndboss() && !this.alertPlayedOff) {
                 this.isStatusBarVisible = true;
                 this.playAnimation(this.BOSS_ALERT);
@@ -108,4 +120,7 @@ class Endboss extends MovableObject {
         }
     }
 
+    gameWon(){
+        document.getElementById('winGameContainer').classList.remove('d-none');
+    }
 };

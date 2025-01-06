@@ -13,7 +13,12 @@ class World {
     statusBarBottles = new StatusbarBottles();
     throwableObject = [];
 
-
+    iha_sound = new Audio('audio/iha.mp3');
+    coin_sound = new Audio('audio/coin.mp3');
+    bottle_sound = new Audio('audio/bottle.mp3');
+    male_hurt_sound = new Audio('audio/male_hurt.mp3');
+    
+ 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -35,14 +40,29 @@ class World {
             this.checkThrowObjects();
             this.collisionBottleWithChicken();
             this.checkCollisionsWithEndboss();
-        }, 200);
+        }, 100);
+
+        setInterval(() => {
+            this.checkCollisionWithEnemieTop();
+        }, 10);
     }
 
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
+                this.male_hurt_sound.play();
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkCollisionWithEnemieTop() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isCollidingOnTop(enemy)) {
+                this.level.enemies[index].indexOfChicken(index);
+                this.iha_sound.play();
+                level1.enemies[index].alive = false;
             }
         });
     }
@@ -57,20 +77,19 @@ class World {
     collisionBottleWithChicken() {
         this.throwableObject.forEach(bottle => {
             if (this.endboss.isColliding(bottle)) {
-                console.log('Endboss_x: ',this.endboss.x);
-                console.log('bottle_x: ',bottle.x);
                 this.endboss.hit();
                 this.statusBarEndboss.setPercentage(this.endboss.energy);
                 bottle.splashing();
-                
+
             }
         });
     }
 
     collisionCharacterWithBottles() {
-        this.level.bottles.forEach(bottle => {
+        this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                level1.bottles.splice(bottle, 1);
+                this.bottle_sound.play();
+                level1.bottles.splice(index, 1);
                 this.statusBarBottles.incStatusbarBottle();
                 this.statusBarBottles.setPercentage(this.statusBarBottles.percentage);
             }
@@ -78,9 +97,10 @@ class World {
     }
 
     collisionCharacterWithCoins() {
-        this.level.coins.forEach(coin => {
+        this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-                level1.coins.splice(coin, 1);
+                this.coin_sound.play();
+                level1.coins.splice(index, 1);
                 this.statusBarCoins.incStatusbarCoins();
                 this.statusBarCoins.setPercentage(this.statusBarCoins.percentage);
             }
@@ -96,7 +116,7 @@ class World {
         }
     }
 
-    
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -163,11 +183,8 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
-
-
-
-
 }
+
 
 
 // Warum in " this.ctx.drawImage(this.character.img, this.character.x, this.character.y,

@@ -25,61 +25,57 @@
     <script src="./models/endboss.class.js"></script>
     <script src="./level/level1.js"></script>
     <script src="./js/game.js"></script>
-    <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
-
+<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
+    
     <title>EL POLLO LOCO</title>
 </head>
 
 <body onload="init()">
 
-    <div id="rotateMessage" class="d-none">
-        <img id="rotateImage" src="img/rotate.png" alt="">
-        <p class="text-turn-display">Turn your device to play!</p>
-    </div>
+    <audio id="myAudio">
+        <source src="./audio/mexican-hat-dance.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
+    <!-- <div id="startScreen" class="start-screen-container">
+        <img id="startScreenImg" src="./img/9_intro_outro_screens/start/startscreen_2.png" alt="">
+        <img id="playButton" class="play-button icon" onclick="startGame()" src="./img/icons/play-button.png" alt="">
+        <img id="audioButton" class="audio-button icon" onclick="togglePlay()" src="./img/icons/audio.png" alt="">
+    </div> -->
+
+    <!-- <div id="rotate-message">
+        <p class="textTurnDisplay">Turn your device to play!</p>
+    </div> -->
     <div id="game-container">
         <h1 id="titleGame">EL POLLO LOCO</h1>
 
         <canvas id="canvas" width="720px" height="480px"></canvas>
-
-        <!-- Buttons für mobile Ansicht -->
-        <div id="mobile-controls" class="d-none">
+        <div id="playButtons">
             <div id="panelLeft">
-                <button id="leftButton">
-                    < </button>
-                        <button id="rightButton">></button>
+                <button id="leftButton"><</button>
+                <button id="rightButton">></button>
             </div>
+
             <div id="panelRight">
                 <button id="jumpButton">JUMP</button>
                 <button id="throwButton">THROW</button>
             </div>
         </div>
-        <!-- Home Screen -->
-        <div id="startScreenContainer" class="start-screen-container">
-            <img id="startScreenImg" class="start-screen-img" src="img/9_intro_outro_screens/start/startscreen_1.png"
-                alt="">
-            <button onclick="startGame()" id="startGameButton" class="start-game-button">START</button>
-            <button onclick="infoButton()" id="infoGameButton" class="info-game-button">INFO</button>
-        </div>
-
-        <!-- Info -->
-        <div id="infoScreenContainer" class="info-screen-container d-none">
-            <button onclick="backButton()" id="backButton" class="back-button">BACK</button>
-        </div>
-
-        <!-- Game Over -->
         <div id="gameOverContainer" class="game-over-container d-none">
             <img id="gameOverImg" class="game-over-img" src="img/9_intro_outro_screens/game_over/game over.png" alt="">
             <button onclick="restartGame()" id="restartButton" class="restart-button">START AGAIN</button>
         </div>
 
-        <!-- Win -->
         <div id="winGameContainer" class="win-game-container d-none">
             <img id="winGameImg" class="win-game-img" src="img/9_intro_outro_screens/win/win_2.png" alt="">
             <button onclick="restartGame()" id="restartButton" class="restart-button">START AGAIN</button>
         </div>
     </div>
-</body>
 
+
+
+
+
+</body>
 
 </html>

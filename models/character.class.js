@@ -6,6 +6,12 @@ class Character extends MovableObject {
     speed = 5;
     timer = 0;
 
+    offset = {
+        top: 120,
+        left: 40,
+        right: 30,
+        bottom: 30
+    };
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -73,7 +79,10 @@ class Character extends MovableObject {
 
 
     world;  // class World -> this.character.world = this;
+
     walking_sound = new Audio('audio/walking.mp3');
+    game_over_sound = new Audio('audio/game_over.mp3');
+    snoring_sound = new Audio('audio/snoring.mp3');
 
 
     constructor() {
@@ -89,7 +98,6 @@ class Character extends MovableObject {
     }
 
     animate() {
-
         setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -110,10 +118,11 @@ class Character extends MovableObject {
 
 
         setInterval(() => {
-            // console.log('character: ',this.energy);
-
             if (this.isDead()) {
+                this.gameOver();
+                this.game_over_sound.play();
                 this.playAnimation(this.IMAGES_DEAD);
+                this.clearAllIntervals();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURTING);
             } else if (this.isAboutGround()) {
@@ -121,8 +130,6 @@ class Character extends MovableObject {
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
-                    // console.log(this.x);
-
                 }
             }
         }, 90);
@@ -133,12 +140,18 @@ class Character extends MovableObject {
                 this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
                 if (this.timer >= 13000) { // Überprüfe, ob 7 Sekunden vorbei sind
                     this.playAnimation(this.IMAGES_SLEEPING);
+                    this.snoring_sound.play();
                 }
             } else {
                 this.timer = 0; // Timer zurücksetzen, wenn die Bedingung nicht erfüllt ist
             }
         }, 300); // Wird alle 300 Millisekunden aufgerufen
 
+    }
+
+
+    gameOver(){
+        document.getElementById('gameOverContainer').classList.remove('d-none');
     }
 }
 

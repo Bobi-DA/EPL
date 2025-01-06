@@ -22,7 +22,13 @@ class DrawableObject {
     }
     
     draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        try {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } catch (error) {
+            console.warn('Error loading image', error);
+            console.warn('Could noht load image', this.img);
+        }
+        
     }
 
     drawFrame(ctx) {
@@ -37,4 +43,14 @@ class DrawableObject {
 
     }
 
+    // drawFrameRed(ctx) {
+    //     if (this instanceof Character || this instanceof Chicken || this instanceof MiniChicken
+    //         || this instanceof Endboss || this instanceof Coins || this instanceof Bottles) {
+    //         ctx.beginPath();
+    //         ctx.lineWidth = '3';
+    //         ctx.strokeStyle = 'red';
+    //         ctx.rect(this.x, this.y, this.width, this.height);
+    //         ctx.stroke();
+    //     }
+    // }
 }
