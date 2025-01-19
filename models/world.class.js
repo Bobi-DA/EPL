@@ -13,12 +13,12 @@ class World {
     statusBarBottles = new StatusbarBottles();
     throwableObject = [];
 
-    iha_sound = new Audio('audio/iha.mp3');
-    coin_sound = new Audio('audio/coin.mp3');
-    bottle_sound = new Audio('audio/bottle.mp3');
-    male_hurt_sound = new Audio('audio/male_hurt.mp3');
-    
- 
+    // iha_sound = new Audio('audio/iha.mp3');
+    // coin_sound = new Audio('audio/coin.mp3');
+    // bottle_sound = new Audio('audio/bottle.mp3');
+    // male_hurt_sound = new Audio('audio/male_hurt.mp3');
+
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -40,17 +40,17 @@ class World {
             this.checkThrowObjects();
             this.collisionBottleWithChicken();
             this.checkCollisionsWithEndboss();
-        }, 100);
+        }, 50);
 
         setInterval(() => {
             this.checkCollisionWithEnemieTop();
-        }, 10);
+        }, 5);
     }
 
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
-                this.male_hurt_sound.play();
+                if (bgsound) sounds[9].play();
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -61,7 +61,7 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isCollidingOnTop(enemy)) {
                 this.level.enemies[index].indexOfChicken(index);
-                this.iha_sound.play();
+                if (bgsound) sounds[6].play();
                 level1.enemies[index].alive = false;
             }
         });
@@ -88,7 +88,10 @@ class World {
     collisionCharacterWithBottles() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.bottle_sound.play();
+                if (bgsound) {
+                    sounds[8].play();
+                    sounds[8].currentTime = 0;
+                }
                 level1.bottles.splice(index, 1);
                 this.statusBarBottles.incStatusbarBottle();
                 this.statusBarBottles.setPercentage(this.statusBarBottles.percentage);
@@ -99,7 +102,10 @@ class World {
     collisionCharacterWithCoins() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-                this.coin_sound.play();
+                if (bgsound) {
+                    sounds[7].play();
+                    sounds[7].currentTime = 0;
+                }
                 level1.coins.splice(index, 1);
                 this.statusBarCoins.incStatusbarCoins();
                 this.statusBarCoins.setPercentage(this.statusBarCoins.percentage);
@@ -166,6 +172,7 @@ class World {
 
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
+        mo.drawFrameRed(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

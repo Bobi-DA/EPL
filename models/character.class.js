@@ -1,14 +1,14 @@
 class Character extends MovableObject {
     x = 90;
     y = 190;
-    height = 360 / 1.5;
-    width = 180 / 1.5;
+    height = 240;
+    width = 120;
     speed = 5;
     timer = 0;
 
     offset = {
-        top: 120,
-        left: 40,
+        top: 100,
+        left: 20,
         right: 30,
         bottom: 30
     };
@@ -80,9 +80,9 @@ class Character extends MovableObject {
 
     world;  // class World -> this.character.world = this;
 
-    walking_sound = new Audio('audio/walking.mp3');
-    game_over_sound = new Audio('audio/game_over.mp3');
-    snoring_sound = new Audio('audio/snoring.mp3');
+    // walking_sound = new Audio('audio/walking.mp3');
+    // game_over_sound = new Audio('audio/game_over.mp3');
+    // snoring_sound = new Audio('audio/snoring.mp3');
 
 
     constructor() {
@@ -99,28 +99,40 @@ class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.walking_sound.pause();
+            sounds[0].pause();
+
+            if (!bgsound) {
+                sounds[0].pause();
+                sounds[0].currentTime = 0;
+            }
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
-                this.walking_sound.play();
+                if (bgsound) sounds[0].play();
                 this.otherDirection = false;
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
-                this.walking_sound.play();
+                if (bgsound) sounds[0].play(); // walking_sound
                 this.otherDirection = true;
             }
             if (this.world.keyboard.SPACE && !this.isAboutGround()) {
                 this.jump();
             }
             this.world.camera_x = -this.x + 100;
+
+
+            // }
+
+
         }, 1000 / 60);
 
 
         setInterval(() => {
             if (this.isDead()) {
+                sounds[3].pause();
+                sounds[0].pause();
                 this.gameOver();
-                this.game_over_sound.play();
+                if (bgsound) sounds[1].play();
                 this.playAnimation(this.IMAGES_DEAD);
                 this.clearAllIntervals();
             } else if (this.isHurt()) {
@@ -140,7 +152,7 @@ class Character extends MovableObject {
                 this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
                 if (this.timer >= 13000) { // Überprüfe, ob 7 Sekunden vorbei sind
                     this.playAnimation(this.IMAGES_SLEEPING);
-                    this.snoring_sound.play();
+                    if (bgsound) sounds[2].play();
                 }
             } else {
                 this.timer = 0; // Timer zurücksetzen, wenn die Bedingung nicht erfüllt ist
@@ -150,8 +162,8 @@ class Character extends MovableObject {
     }
 
 
-    gameOver(){
+    gameOver() {
         document.getElementById('gameOverContainer').classList.remove('d-none');
     }
-}
 
+}

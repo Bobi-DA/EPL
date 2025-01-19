@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
     speed = 5;
     height = 1045 / 2.5;
     width = 1217 / 2.5;
-    energy = 50;
+    energy = 100;
     timer = 0;
     bossIsActivated = false;
     isAttacking = false;
@@ -11,6 +11,12 @@ class Endboss extends MovableObject {
     activateBossAttack = false;
     isStatusBarVisible = false;
 
+    offset = {
+        top: 70,
+        left: 20,
+        right: 60,
+        bottom: 90
+    };
 
     BOSS_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -53,8 +59,8 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
-    chicken_sound = new Audio('audio/chicken.mp3');
-    game_won_sound = new Audio('audio/game_won.mp3');
+    // chicken_sound = new Audio('audio/chicken.mp3');
+    // game_won_sound = new Audio('audio/game_won.mp3');
 
     constructor() {
         super().loadImage(this.BOSS_ALERT[7]);
@@ -73,19 +79,21 @@ class Endboss extends MovableObject {
     animate() {
 
         setInterval(() => {
-            this.chicken_sound.pause();
+            // sounds[4].pause();
 
             if (this.isDead()) {
                 this.bossIsActivated = false;
                 this.playAnimation(this.BOSS_DEAD);
+                sounds[3].pause();
+                sounds[0].pause();
                 this.gameWon();
-                this.game_won_sound.play();
+                if (bgsound) sounds[5].play();
                 setTimeout(() => {
                     this.clearAllIntervals();
                 }, 1000);
             } else if (this.isHurt()) {
                 this.playAnimation(this.BOSS_HURTING);
-                this.chicken_sound.play();
+                if (bgsound) sounds[4].play();
             } else if (this.characterMeetsEndboss() && !this.alertPlayedOff) {
                 this.isStatusBarVisible = true;
                 this.playAnimation(this.BOSS_ALERT);
@@ -120,7 +128,7 @@ class Endboss extends MovableObject {
         }
     }
 
-    gameWon(){
+    gameWon() {
         document.getElementById('winGameContainer').classList.remove('d-none');
     }
 };

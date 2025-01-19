@@ -34,13 +34,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-    // isColliding(mo, offset = 10) {
-    //     return this.x + this.width - offset > mo.x &&
-    //         this.y + this.height - offset > mo.y &&
-    //         this.x + offset < mo.x + mo.width &&
-    //         this.y + offset < mo.y + mo.height;
-    // }
-
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -53,10 +46,10 @@ class MovableObject extends DrawableObject {
         const isOnTop = this.y + this.height >= mo.y && this.y + this.height <= mo.y + 50; // Innerhalb des Spielraums
         const isHorizontallyAligned = this.x + this.width > mo.x && this.x < mo.x + mo.width; // Horizontale Überlappung
         const isFalling = this.speedY < 0; // Der Charakter fällt nach unten
-        // console.log(isOnTop, isHorizontallyAligned, isFalling);
 
         return isOnTop && isHorizontallyAligned && isFalling;
     }
+
 
     hit() {
         this.energy -= 5;
@@ -68,6 +61,7 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
     characterMeetsEndboss() {
         if (!world || !world.character) {
             // console.warn("world oder character ist nicht definiert!");
@@ -76,9 +70,11 @@ class MovableObject extends DrawableObject {
         return world.character.x > 1200;
     }
 
+
     activateBoss() {
         return this.bossIsActivated = true; // Endboss wird aktiviert
     }
+
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
@@ -86,15 +82,18 @@ class MovableObject extends DrawableObject {
         return timepassed < 0.5;
     }
 
+
     isDead() {
         return this.energy <= 0;
     }
+
 
     isWaiting() {
         if (!this.world.keyboard.D && !this.world.keyboard.LEFT && !this.world.keyboard.RIGHT && !this.world.keyboard.SPACE && !this.isAboutGround()) {
             return true;
         }
     }
+
 
     playAnimation(images) {
         let i = this.currentImage % images.length;
@@ -103,18 +102,22 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
     moveRight() {
         this.x += this.speed;
     }
+
 
     moveLeft() {
         this.x -= this.speed;
     }
 
+
     jump() {
         this.speedY = 30;
     }
 
+    
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
       }

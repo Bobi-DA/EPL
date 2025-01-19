@@ -34,7 +34,7 @@ body {
 
 #mobile-controls {
     position: absolute;
-    bottom: 22px;
+    bottom: 10px;
     left: 0;
     width: 100%;
     display: flex;
@@ -85,7 +85,9 @@ button:active {
 }
 
 .restart-button,
-.start-game-button {
+.start-game-button,
+.back-button,
+.home-button {
     font-size: 18px;
     padding: 10px 20px;
     background-color: #28a745;
@@ -97,7 +99,8 @@ button:active {
 
 .start-game-button,
 .info-game-button,
-.back-button {
+.back-button,
+.home-button {
     background-color: #ff6600;
     color: white;
     border: none;
@@ -111,45 +114,54 @@ button:active {
 
 .start-game-button:hover,
 .info-game-button:hover,
-.back-button {
+.back-button:hover,
+.home-button:hover {
     background-color: #ff4500;
     transform: scale(1.1);
 }
 
 .start-game-button:active,
 .info-game-button:active,
-.back-button {
+.back-button:active,
+.home-button:active {
     transform: scale(0.95);
 }
 
-@media (max-width: 768px) {
-
-    .start-game-button,
-    .info-game-button {
-        padding: 15px;
-        font-size: 16px;
-        width: 80%;
-    }
-}
-.start-screen-img{
-    border-radius: 3px;
-    width: 100%;
+.c-pointer {
+    cursor: pointer;
 }
 
-.info-screen-container{
+.start-screen-img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    height: 100%;
+}
+
+.info-screen-container {
     width: 100%;
     height: 480px;
-    background-color: #994409;
+    background-color: #e6d59f;
     position: absolute;
-    top: 14%;
+    top: 0%;
     z-index: 5;
     border-radius: 8px;
+    overflow: auto;
+    font-family: Arial, Helvetica, sans-serifS;
+}
+
+.audio-btn {
+    position: absolute;
+    z-index: 5;
+    bottom: 8px;
+    left: 14px;
 }
 
 .start-screen-container {
     position: absolute;
-    top: 15%;
-    background-color: #994409;
+    top: 0%;
+    /* background-color: #994409; */
+    border-radius: 8px;
+    height: 100%;
 }
 
 .restart-button:hover {
@@ -158,6 +170,26 @@ button:active {
 
 .d-none {
     display: none !important;
+}
+
+.key {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.key-d {
+    width: 48px;
+    margin: 8px 0;
+}
+
+.keyboards-container {
+    position: absolute;
+    top: 8px;
+    gap: 8%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 #rotateMessage {
@@ -195,7 +227,7 @@ button:active {
     .game-over-container,
     .win-game-container {
         position: absolute;
-        top: 58%;
+        top: 50%;
         left: 50%;
         /* transform: translate(-50%, -50%); */
         background: rgba(0, 0, 0, 0.8);
@@ -203,6 +235,38 @@ button:active {
         text-align: center;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .start-game-button,
+    .info-game-button,
+    .back-button,
+    .home-button {
+        padding: 15px;
+        font-size: 16px;
+        width: 40%;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .start-game-button,
+    .info-game-button,
+    .back-button,
+    .home-button {
+        padding: 15px;
+        font-size: 16px;
+        width: 40%;
+    }
+
+    .start-info-btn-container {
+        display: flex;
+        justify-content: space-evenly;
+        position: absolute;
+        bottom: 1%;
+        width: 100%;
     }
 }
 

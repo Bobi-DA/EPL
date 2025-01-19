@@ -1,10 +1,14 @@
-let level1 = new Level(       //globale Konstante
+let level1;
+
+function initLevel() {
+
+    level1 = new Level(       //globale Konstante
 
         [
             new Chicken(),
-            new Chicken(),
-            new Chicken(),
-            new Chicken(),
+            // new Chicken(),
+            // new Chicken(),
+            // new Chicken(),
             // new MiniChicken(),
             // new MiniChicken(),
             // new MiniChicken(),
@@ -53,3 +57,4 @@ let level1 = new Level(       //globale Konstante
 
         ]
     );
+}

@@ -1,7 +1,7 @@
 class Chicken extends MovableObject {
-    y = 375;
-    height = 50;
-    width = 40;
+    y = 360;
+    height = 50*1.4;
+    width = 40*1.4;
 
     alive = true;
     indexChicken;
@@ -28,7 +28,7 @@ class Chicken extends MovableObject {
         this.loadImages(this.CHICKEN_WALKING);
         this.loadImages(this.CHICKEN_DEAD);
 
-        this.x = 250 + Math.random() * 1400;
+        this.x = 300 + Math.random() * 1800;
         this.speed = 0.25 + Math.random() * 0.4;
 
         this.animate();
@@ -55,27 +55,11 @@ class Chicken extends MovableObject {
             }
         }, 160);
 
-        // setInterval(() => {
-        //     for (const mo of level1.enemies) {
-        //         if (this.isCollidingOnTop(mo)) {
-        //             mo.playAnimation(mo.CHICKEN_DEAD);
-        //             console.log('chicken dead');
-
-        //         }
-        //     }
-        // }, 100);
-
-
-        // setInterval(() => {
-        //     if (this.checkCollisionWithEnemieTop()) {
-        //     this.playAnimation(this.CHICKEN_DEAD);
-        //     }
-        // }, 100);
     }
 
 
     indexOfChicken(index) {
-        console.log('IndexChickenClass: ', index);
+        // console.log('IndexChickenClass: ', index);
         this.indexChicken = index;
         if (index > -1) {
             this.alive = false;

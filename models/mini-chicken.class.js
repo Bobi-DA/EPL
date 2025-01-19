@@ -1,7 +1,15 @@
 class MiniChicken extends MovableObject {
-    y = 395;
-    height = 50/2;
-    width = 40/2;
+    y = 375;
+    height = 50;
+    width = 40;
+
+    alive = true;
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    }
 
     MINICHICKEN_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -16,8 +24,9 @@ class MiniChicken extends MovableObject {
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.MINICHICKEN_WALKING);
+        this.loadImages(this.MINICHICKEN_DEAD);
 
-        this.x = 250 + Math.random() * 1400;
+        this.x = 300 + Math.random() * 2000;
         this.speed = 0.25 + Math.random() * 0.4;
 
         this.animate();
@@ -29,9 +38,30 @@ class MiniChicken extends MovableObject {
             this.moveLeft();
         }, 16)
 
+        // setInterval(() => {
+        //     this.playAnimation(this.MINICHICKEN_WALKING);
+        // }, 160);
         setInterval(() => {
-            this.playAnimation(this.MINICHICKEN_WALKING);
+            if (this.alive) {
+                this.playAnimation(this.MINICHICKEN_WALKING);
+            } else {
+                level1.enemies[this.indexChicken].speed = 0;
+                this.playAnimation(this.MINICHICKEN_DEAD);
+                setTimeout(() => {
+                    if (!this.alive) {
+                        level1.enemies.splice(this.indexChicken, 1);
+                        this.alive = true;
+                    }
+                }, 500);
+            }
         }, 160);
+    }
 
+    indexOfChicken(index) {
+        console.log('IndexChickenClass: ', index);
+        this.indexChicken = index;
+        if (index > -1) {
+            this.alive = false;
+        }
     }
 }
