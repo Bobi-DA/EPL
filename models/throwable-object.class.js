@@ -42,8 +42,13 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
 
         setInterval(() => {
-            this.playAnimation(this.BOTTLE_THROWING);
-            this.x += 10;
+            if (!world.character.otherDirection) {
+                this.playAnimation(this.BOTTLE_THROWING);
+                this.x += 10;
+            } else {
+                this.playAnimation(this.BOTTLE_THROWING);
+                this.x -= 10;
+            }
         }, 30);
     }
 

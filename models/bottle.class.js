@@ -22,7 +22,7 @@ class Bottles extends MovableObject {
     animate() {
         setInterval(() => {
             this.playAnimation(this.BOTTLE_GROUND);
-        }, 160);
+        }, 1000);
     }
     
 }

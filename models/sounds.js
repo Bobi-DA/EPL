@@ -32,7 +32,6 @@ function soundPlay() {
 
     bgsound = !bgsound;
 
-    // Button-Anzeige anpassen
     document.getElementById('audioOnBtn').classList.toggle('d-none', !bgsound);
     document.getElementById('audioOffBtn').classList.toggle('d-none', bgsound);
 }

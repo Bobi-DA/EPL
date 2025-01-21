@@ -61,7 +61,9 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isCollidingOnTop(enemy)) {
                 this.level.enemies[index].indexOfChicken(index);
+                this.level.enemies[index].offset.top = 400;
                 if (bgsound) sounds[6].play();
+                sounds[6].currentTime = 0;
                 level1.enemies[index].alive = false;
             }
         });

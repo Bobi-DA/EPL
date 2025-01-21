@@ -7,7 +7,6 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);    // In dieser Variable wird das neue Objekt gespeichert, das aus der Klasse 'World' erstellt wird.
 
-    // Initiale Prüfung
     checkOrientation();
     keyPressButton();
     keyPressTouch();
@@ -54,7 +53,15 @@ function homeButton() {
 }
 
 function restartGame() {
-    location.reload();
+    sounds.forEach(sound => {
+        sound.currentTime = 0;
+    });
+    document.getElementById('gameOverContainer').classList.add('d-none');
+    document.getElementById('winGameContainer').classList.add('d-none');
+    document.getElementById('audioOffBtn').classList.add('d-none');
+    document.getElementById('audioOnBtn').classList.remove('d-none');
+    startGame();
+    // soundPlay();
 }
 
 
@@ -172,7 +179,7 @@ function keyPressTouch() {
             event.preventDefault();
         };
         console.log('push button on');
-        
+
         soundPlay();
     });
 
