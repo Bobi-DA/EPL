@@ -1,7 +1,7 @@
 class Chicken extends MovableObject {
     y = 360;
-    height = 50*1.4;
-    width = 40*1.4;
+    height = 70;
+    width = 56;
 
     alive = true;
     indexChicken;
@@ -34,7 +34,12 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-
+    /**
+     * Controls the animation and behavior of the chicken.
+     * - Moves the chicken continuously to the left.
+     * - Updates the chicken's animation based on its state (alive or dead).
+     * - Removes the chicken from the `level1.enemies` array after a delay when it is dead.
+     */
     animate() {
         setInterval(() => {
             this.moveLeft();
@@ -57,9 +62,14 @@ class Chicken extends MovableObject {
 
     }
 
-
+    /**
+     * Sets the index of the chicken in the `level1.enemies` array and marks it as dead.
+     * - Updates the `indexChicken` property to the given index.
+     * - Sets the `alive` property to `false` if the index is valid.
+     * 
+     * @param {number} index - The index of the chicken in the `level1.enemies` array. A value greater than -1 marks the chicken as dead.
+     */
     indexOfChicken(index) {
-        // console.log('IndexChickenClass: ', index);
         this.indexChicken = index;
         if (index > -1) {
             this.alive = false;

@@ -7,55 +7,47 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
+    /**
+     * Loads a single image and sets it as the object's image.
+     * - Creates a new `Image` object and assigns it to the `img` property.
+     * - Sets the source of the image to the given path.
+     *
+     * @param {string} path - The file path of the image to be loaded.
+     */
     loadImage(path) {
         this.img = new Image();
-        this.img.src = path;     // Die src-Eigenschaft eines Bild-Objekts gibt den Pfad zur Bilddatei an.
+        this.img.src = path;
 
     }
 
-    loadImages(arr) {                           // Die Methode `loadImages` nimmt ein Array `arr` von Bildpfaden.
-        arr.forEach((path) => {                 // Für jeden Bildpfad im Array wird eine Funktion ausgeführt.
-            let img = new Image();              // Ein neues Bild-Objekt wird erstellt.
-            img.src = path;                     // Der Pfad des Bildes wird gesetzt, sodass der Browser das Bild lädt.
-            this.imageCache[path] = img;        // Das Bild wird im Cache `imageCache` unter dem Pfad als Schlüssel gespeichert.
+    /**
+     * Loads multiple images and caches them for future use.
+     * - Iterates over an array of image paths.
+     * - Creates a new `Image` object for each path, sets its source, and stores it in the `imageCache`.
+     *
+     * @param {string[]} arr - An array of image file paths to be loaded and cached.
+     */
+    loadImages(arr) {
+        arr.forEach((path) => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = img;
         });
     }
 
+    /**
+     * Draws the object's image on the canvas.
+     * - Attempts to draw the image specified by the `img` property.
+     * - If an error occurs during the drawing process, logs a warning message with details.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the canvas on which to draw the image.
+     */
     draw(ctx) {
         try {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         } catch (error) {
             console.warn('Error loading image', error);
             console.warn('Could noht load image', this.img);
-        }
-
-    }
-
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof MiniChicken
-            || this instanceof Endboss || this instanceof Coins || this instanceof Bottles) {
-            ctx.beginPath();
-            ctx.lineWidth = '3';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-
-    }
-
-    drawFrameRed(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof MiniChicken
-            || this instanceof Endboss || this instanceof Coins || this instanceof Bottles) {
-            ctx.beginPath();
-            ctx.lineWidth = '3';
-            ctx.strokeStyle = 'red';
-            ctx.rect(
-                this.x + this.offset.left,
-                this.y + this.offset.top,
-                this.width - this.offset.right - this.offset.left,
-                this.height - this.offset.bottom - this.offset.top
-            );
-            ctx.stroke();
         }
 
     }

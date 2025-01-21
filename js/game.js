@@ -3,9 +3,12 @@ let world;
 let keyboard = new Keyboard();
 let gameStarted = false;
 
+/**
+ * Initializes the game by setting up the canvas, world, and event listeners.
+ */
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);    // In dieser Variable wird das neue Objekt gespeichert, das aus der Klasse 'World' erstellt wird.
+    world = new World(canvas, keyboard); 
 
     checkOrientation();
     keyPressButton();
@@ -13,7 +16,9 @@ function init() {
     checkDevice();
 }
 
-// Überprüfen, ob es sich um ein Smartphone handelt
+/**
+ * Checks the device type and toggles mobile controls visibility based on screen width.
+ */
 function checkDevice() {
     const isMobile = window.innerWidth <= 768;
     const controls = document.getElementById('mobile-controls');
@@ -25,12 +30,14 @@ function checkDevice() {
     }
 }
 
-
-// Beim Laden und bei Größenänderung prüfen
+// Event listeners to handle device resizing and initial load.
 window.addEventListener('resize', checkDevice);
 window.addEventListener('load', checkDevice);
 
-
+/**
+ * Starts the game by initializing levels and the game world,
+ * and managing UI visibility for the start screen and sound controls.
+ */
 function startGame() {
     initLevel();
     init();
@@ -40,18 +47,31 @@ function startGame() {
     bgsound = true;
 }
 
+/**
+ * Displays the information screen.
+ */
 function infoButton() {
     document.getElementById('infoScreenContainer').classList.remove('d-none');
 }
 
+/**
+ * Hides the information screen and returns to the previous screen.
+ */
 function backButton() {
     document.getElementById('infoScreenContainer').classList.add('d-none');
 }
 
+/**
+ * Reloads the current page to restart the game.
+ */
 function homeButton() {
     location.reload();
 }
 
+/**
+ * Restarts the game by resetting all sounds, hiding game over screens,
+ * and re-initializing the game world.
+ */
 function restartGame() {
     sounds.forEach(sound => {
         sound.currentTime = 0;
@@ -61,162 +81,108 @@ function restartGame() {
     document.getElementById('audioOffBtn').classList.add('d-none');
     document.getElementById('audioOnBtn').classList.remove('d-none');
     startGame();
-    // soundPlay();
 }
 
-
-
-
+/**
+ * Adds event listeners for keyboard input to set the `keyboard` state.
+ */
 function keyPressButton() {
     window.addEventListener("keydown", (event) => {
-        if (event.code == 'ArrowLeft') {
-            keyboard.LEFT = true;
-        }
-        if (event.code == 'ArrowRight') {
-            keyboard.RIGHT = true;
-        }
-        if (event.code == 'ArrowDown') {
-            keyboard.DOWN = true;
-        }
-        if (event.code == 'ArrowUP') {
-            keyboard.UP = true;
-        }
-        if (event.code == 'Space') {
-            keyboard.SPACE = true;
-        }
-        if (event.code == 'KeyD') {
-            keyboard.D = true;
-        }
-
+        if (event.code == 'ArrowLeft') keyboard.LEFT = true;
+        if (event.code == 'ArrowRight') keyboard.RIGHT = true;
+        if (event.code == 'ArrowDown') keyboard.DOWN = true;
+        if (event.code == 'ArrowUP') keyboard.UP = true;
+        if (event.code == 'Space') keyboard.SPACE = true;
+        if (event.code == 'KeyD') keyboard.D = true;
     });
 
     window.addEventListener("keyup", (event) => {
-        if (event.code == 'ArrowLeft') {
-            keyboard.LEFT = false;
-        }
-        if (event.code == 'ArrowRight') {
-            keyboard.RIGHT = false;
-        }
-        if (event.code == 'ArrowDown') {
-            keyboard.DOWN = false;
-        }
-        if (event.code == 'ArrowUP') {
-            keyboard.UP = false;
-        }
-        if (event.code == 'Space') {
-            keyboard.SPACE = false;
-        }
-        if (event.code == 'KeyD') {
-            keyboard.D = false;
-        }
-
+        if (event.code == 'ArrowLeft') keyboard.LEFT = false;
+        if (event.code == 'ArrowRight') keyboard.RIGHT = false;
+        if (event.code == 'ArrowDown') keyboard.DOWN = false;
+        if (event.code == 'ArrowUP') keyboard.UP = false;
+        if (event.code == 'Space') keyboard.SPACE = false;
+        if (event.code == 'KeyD') keyboard.D = false;
     });
 }
 
+/**
+ * Adds touch event listeners for mobile controls to set the `keyboard` state.
+ */
 function keyPressTouch() {
     document.getElementById('leftButton').addEventListener('touchstart', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.LEFT = true;
     });
 
     document.getElementById('leftButton').addEventListener('touchend', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.LEFT = false;
     });
 
-
     document.getElementById('rightButton').addEventListener('touchstart', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.RIGHT = true;
     });
 
     document.getElementById('rightButton').addEventListener('touchend', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.RIGHT = false;
     });
 
-
     document.getElementById('jumpButton').addEventListener('touchstart', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.SPACE = true;
     });
 
     document.getElementById('jumpButton').addEventListener('touchend', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.SPACE = false;
     });
 
-
     document.getElementById('throwButton').addEventListener('touchstart', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.D = true;
     });
 
     document.getElementById('throwButton').addEventListener('touchend', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
+        event.preventDefault();
         keyboard.D = false;
     });
 
-
     document.getElementById('audioOnBtn').addEventListener('touchstart', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
-        console.log('push button on');
-
+        event.preventDefault();
         soundPlay();
     });
 
-
     document.getElementById('audioOffBtn').addEventListener('touchend', (event) => {
-        if (event.cancelable) {
-            event.preventDefault();
-        };
-        console.log('push button off');
-
+        event.preventDefault();
         soundPlay();
     });
 }
 
+/**
+ * Checks the screen orientation and toggles the orientation message accordingly.
+ */
 function checkOrientation() {
-    titleGame = document.getElementById('titleGame');
+    const rotateMessage = document.getElementById('rotateMessage');
     if (window.matchMedia("(orientation: portrait)").matches) {
-        // console.log('Hochformat');
-        // titleGame.classList.remove("dn");
         rotateMessage.classList.remove('d-none');
-
     } else if (window.matchMedia("(orientation: landscape)").matches) {
         rotateMessage.classList.add('d-none');
-        // console.log('Querformat');
-        // titleGame.classList.add("dn");
     }
 }
 
-// Event-Listener für Änderungen der Orientierung
+// Event listener for orientation changes
 window.addEventListener('resize', checkOrientation);
 
-
+/**
+ * Displays or hides the rotation message based on screen dimensions.
+ */
 function orientationDisplay() {
-    let widthScreen = window.innerWidth;
-    let heightScreen = window.innerHeight;
+    const widthScreen = window.innerWidth;
+    const heightScreen = window.innerHeight;
     const rotateMessage = document.getElementById('rotateMessage');
-    // const gameContainer = document.getElementById('game-container'); 
 
     if (widthScreen < heightScreen) {
         rotateMessage.classList.remove('d-none');

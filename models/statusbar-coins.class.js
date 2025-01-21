@@ -22,6 +22,11 @@ class StatusbarCoins extends DrawableObject {
         this.setPercentage(0);
     }
 
+    /**
+    * Updates the percentage value for the status bar and sets the appropriate image based on the percentage.
+    * 
+    * @param {number} percentage - The new percentage value to set (ranges from 0 to 5).
+    */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.STATUSBAR_COIN[this.resolveImageIndex()];
@@ -33,6 +38,11 @@ class StatusbarCoins extends DrawableObject {
         this.percentage +=1;
     }
 
+     /**
+     * Determines the appropriate image index based on the current percentage value.
+     * 
+     * @returns {number} - The index of the image corresponding to the current percentage (ranges from 0 to 5).
+     */
     resolveImageIndex() {
         if (this.percentage == 5) {
             return 5;

@@ -14,7 +14,6 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
-
     applyGravity() {
         setInterval(() => {
             if (this.isAboutGround() || this.speedY > 0) {
@@ -43,9 +42,9 @@ class MovableObject extends DrawableObject {
 
 
     isCollidingOnTop(mo) {
-        const isOnTop = this.y + this.height >= mo.y && this.y + this.height <= mo.y + 50; // Innerhalb des Spielraums
-        const isHorizontallyAligned = this.x + this.width > mo.x && this.x < mo.x + mo.width; // Horizontale Überlappung
-        const isFalling = this.speedY < 0; // Der Charakter fällt nach unten
+        const isOnTop = this.y + this.height >= mo.y && this.y + this.height <= mo.y + 50; 
+        const isHorizontallyAligned = this.x + this.width > mo.x && this.x < mo.x + mo.width;
+        const isFalling = this.speedY < 0;
 
         return isOnTop && isHorizontallyAligned && isFalling;
     }
@@ -60,20 +59,16 @@ class MovableObject extends DrawableObject {
         }
     }
 
-
     characterMeetsEndboss() {
         if (!world || !world.character) {
-            // console.warn("world oder character ist nicht definiert!");
-            return false; // Fehler abfangen und `false` zurückgeben
+            return false;
         }
         return world.character.x > 1200;
     }
 
-
     activateBoss() {
-        return this.bossIsActivated = true; // Endboss wird aktiviert
+        return this.bossIsActivated = true;
     }
-
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
@@ -86,13 +81,11 @@ class MovableObject extends DrawableObject {
         return this.energy <= 0;
     }
 
-
     isWaiting() {
         if (!this.world.keyboard.D && !this.world.keyboard.LEFT && !this.world.keyboard.RIGHT && !this.world.keyboard.SPACE && !this.isAboutGround()) {
             return true;
         }
     }
-
 
     playAnimation(images) {
         let i = this.currentImage % images.length;
@@ -101,21 +94,17 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-
     moveRight() {
         this.x += this.speed;
     }
-
 
     moveLeft() {
         this.x -= this.speed;
     }
 
-
     jump() {
         this.speedY = 30;
     }
-
     
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);

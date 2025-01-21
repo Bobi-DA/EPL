@@ -16,16 +16,18 @@ const sounds = [
 
 let bgsound = false;
 
-// Funktion zum Starten/Stoppen aller Sounds
+/**
+ * Toggles the background sound in the game and updates the audio control buttons.
+ * - Pauses or plays all sounds based on the `bgsound` state.
+ * - Ensures that the specified sound (index 3 in the `sounds` array) loops when playing.
+ * - Toggles visibility of the audio control buttons based on the current sound state.
+ */
 function soundPlay() {
-
-    // Funktion zum Ein-/Ausschalten aller Sounds
     sounds.forEach((sound) => {
         if (bgsound) {
             sound.pause();
-            // sound.currentTime = 0; // Optional: Zurücksetzen
         } else {
-            if (sound === sounds[3]) sound.loop = true; // Hintergrundsound in Endlosschleife
+            if (sound === sounds[3]) sound.loop = true;
             sounds[3].play();
         }
     });

@@ -32,15 +32,16 @@ class MiniChicken extends MovableObject {
         this.animate();
     }
 
-
+    /**
+     * Manages the animation and movement of the Mini Chicken character.
+     * - Continuously moves the Mini Chicken to the left.
+     * - Checks if the Mini Chicken is alive or dead and plays the appropriate animations.
+     * - Removes the Mini Chicken from the enemy list when it is marked as dead.
+     */
     animate() {
         setInterval(() => {
             this.moveLeft();
         }, 16)
-
-        // setInterval(() => {
-        //     this.playAnimation(this.MINICHICKEN_WALKING);
-        // }, 160);
         setInterval(() => {
             if (this.alive) {
                 this.playAnimation(this.MINICHICKEN_WALKING);
@@ -57,8 +58,12 @@ class MiniChicken extends MovableObject {
         }, 160);
     }
 
+    /**
+     * Sets the index of the Mini Chicken in the enemies list and marks it as dead if a valid index is provided.
+     * @param {number} index - The index of the Mini Chicken in the `level1.enemies` array.
+     * - If `index > -1`, the Mini Chicken is marked as not alive.
+     */
     indexOfChicken(index) {
-        console.log('IndexChickenClass: ', index);
         this.indexChicken = index;
         if (index > -1) {
             this.alive = false;

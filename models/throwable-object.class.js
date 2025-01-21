@@ -24,12 +24,16 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.loadImages(this.BOTTLE_THROWING);
         this.loadImages(this.BOTTLE_SPLASHING);
-        // this.throw();
         this.animation();
     }
 
+    /**
+     * Handles the animation based on the object's position.
+     * 
+     * If the object is beyond the end boss's position, it triggers the `splashing()` animation.
+     * Otherwise, it triggers the `throw()` animation.
+     */
     animation() {
-
         if (this.x > world.endboss.x) {
             this.splashing();
         } else {
@@ -37,6 +41,12 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+    /**
+     * Handles the throwing animation.
+     * 
+     * Sets `speedY` to 30, applies gravity, and starts an interval that plays the throw animation.
+     * The direction of the throw depends on the `otherDirection` property of `world.character`.
+     */
     throw() {
         this.speedY = 30;
         this.applyGravity();
@@ -52,6 +62,11 @@ class ThrowableObject extends MovableObject {
         }, 30);
     }
 
+    /**
+     * Handles the splashing animation.
+     * 
+     * Starts an interval that plays the splash animation repeatedly.
+     */
     splashing() {
         setInterval(() => {
             this.playAnimation(this.BOTTLE_SPLASHING);

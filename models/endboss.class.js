@@ -59,9 +59,6 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
-    // chicken_sound = new Audio('audio/chicken.mp3');
-    // game_won_sound = new Audio('audio/game_won.mp3');
-
     constructor() {
         super().loadImage(this.BOSS_ALERT[7]);
         this.loadImages(this.BOSS_ALERT);
@@ -75,12 +72,15 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
-
+    /**
+     * Controls the animation and behavior of the boss character.
+     * - Checks the boss's state (dead, hurt, attacking, etc.) and plays corresponding animations.
+     * - Handles the activation of the boss's attack and movement logic.
+     * - Plays specific sounds based on the boss's state.
+     * - Manages transitions like showing the status bar, triggering attacks, or stopping the game when the boss is defeated.
+     */
     animate() {
-
         setInterval(() => {
-            // sounds[4].pause();
-
             if (this.isDead()) {
                 this.bossIsActivated = false;
                 this.playAnimation(this.BOSS_DEAD);
@@ -118,7 +118,11 @@ class Endboss extends MovableObject {
 
     }
 
-
+    /**
+     * Triggers the boss's attack action.
+     * - Ensures the boss is in an attackable state and activates the attack animation.
+     * - Sets a timeout to reset the attack state after 3 seconds.
+     */
     bossAttack() {
         if (!this.isAttacking && this.activateBoss()) {
             this.isAttacking = true;
@@ -128,6 +132,10 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Displays the "Game Won" screen.
+     * - Removes the `d-none` class from the win game container element to make it visible.
+     */
     gameWon() {
         document.getElementById('winGameContainer').classList.remove('d-none');
     }

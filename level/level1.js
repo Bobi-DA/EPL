@@ -2,7 +2,7 @@ let level1;
 
 function initLevel() {
 
-    level1 = new Level(       //globale Konstante
+    level1 = new Level(
 
         [
             new Chicken(),

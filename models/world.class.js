@@ -13,12 +13,6 @@ class World {
     statusBarBottles = new StatusbarBottles();
     throwableObject = [];
 
-    // iha_sound = new Audio('audio/iha.mp3');
-    // coin_sound = new Audio('audio/coin.mp3');
-    // bottle_sound = new Audio('audio/bottle.mp3');
-    // male_hurt_sound = new Audio('audio/male_hurt.mp3');
-
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -29,7 +23,7 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this;    // Die Instanz der Klasse "World" wird dem Charakter "world" zugewiesen
+        this.character.world = this;
     }
 
     run() {
@@ -124,7 +118,6 @@ class World {
         }
     }
 
-
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -148,11 +141,7 @@ class World {
             this.addToMap(this.statusBarEndboss);
         }
         this.ctx.translate(this.camera_x, 0);
-
         this.ctx.translate(-this.camera_x, 0);
-
-
-
 
         let self = this;
         requestAnimationFrame(function () {
@@ -171,10 +160,7 @@ class World {
             this.flipImage(mo);
         }
 
-
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-        mo.drawFrameRed(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -193,17 +179,3 @@ class World {
         this.ctx.restore();
     }
 }
-
-
-
-// Warum in " this.ctx.drawImage(this.character.img, this.character.x, this.character.y,
-// this.character.width, this.character.height);" die Punkt-Notation funktioniert.
-
-// Die Klasse World muss nicht von MovableObject erben, weil in der World-Klasse eine Instanz der
-// Character-Klasse erstellt wird, und die Character-Klasse wiederum von MovableObject erbt. Das
-// bedeutet, dass der Character, der in der Welt existiert, bereits die Eigenschaften und Methoden
-// von MovableObject hat, wie zum Beispiel die moveRight()- oder moveLeft()-Methoden.
-// Die World-Klasse hat also Zugriff auf den Character und damit auf alles, was der Character erbt.
-// Die World selbst braucht diese Vererbung nicht, weil sie nicht selbst ein bewegliches Objekt ist,
-// sondern eher eine übergeordnete Instanz, die die verschiedenen Objekte (wie den Charakter und die Feinde)
-// verwaltet und zeichnet.
