@@ -54,12 +54,12 @@ class ThrowableObject extends MovableObject {
         setInterval(() => {
             if (!world.character.otherDirection) {
                 this.playAnimation(this.BOTTLE_THROWING);
-                this.x += 10;
+                this.x += 20;
             } else {
                 this.playAnimation(this.BOTTLE_THROWING);
-                this.x -= 10;
+                this.x -= 20;
             }
-        }, 30);
+        }, 60);
     }
 
     /**

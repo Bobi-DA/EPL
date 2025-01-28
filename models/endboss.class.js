@@ -13,7 +13,7 @@ class Endboss extends MovableObject {
 
     offset = {
         top: 70,
-        left: 20,
+        left: 80,
         right: 60,
         bottom: 90
     };
@@ -72,6 +72,18 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    // setInterval wiederholt mehrmals nach einer bestimmten zeit
+    // setTimeout wir nur EINMAL gesetzt
+
+    bossAttack() {
+        if (!this.isAttacking) {
+            this.isAttacking = true;
+            setTimeout(() => {
+                this.isAttacking = false;
+            }, 500);
+        }
+    }
+
     /**
      * Controls the animation and behavior of the boss character.
      * - Checks the boss's state (dead, hurt, attacking, etc.) and plays corresponding animations.
@@ -98,39 +110,38 @@ class Endboss extends MovableObject {
                 this.isStatusBarVisible = true;
                 this.playAnimation(this.BOSS_ALERT);
                 setTimeout(() => {
+                    this.bossIsActivated = this.activateBoss();
                     this.alertPlayedOff = true;
                     this.activateBossAttack = true;
-                }, 2000);
-            } else if (this.activateBossAttack && !this.isAttacking) {
-                this.bossAttack();
-            } else if (this.isAttacking) {
-                this.playAnimation(this.BOSS_ATTACKING);
-            } else {
-                this.playAnimation(this.BOSS_WALKING);
-            }
-        }, 160);
+                }, 1000);
+            } 
+        }, 150);
 
         setInterval(() => {
             if (this.bossIsActivated) {
-                this.moveLeft();
+                if (this.isAttacking) {
+                    this.playAnimation(this.BOSS_ATTACKING);
+                } else {
+                    this.moveLeft();
+                    this.playAnimation(this.BOSS_WALKING);
+                }
             }
-        }, 250);
+        }, 150);
 
+        setInterval(() => {
+            if (this.activateBossAttack && !this.isAttacking) {
+                this.bossAttack();
+            }
+        }, 150);
+
+
+        setInterval(() => {
+            if (this.bossIsActivated) {
+                this.isAttacking = !this.isAttacking; // Alle 2 Sekunden wechseln zwischen Angriff und Bewegung
+            }
+        }, 1000);
     }
 
-    /**
-     * Triggers the boss's attack action.
-     * - Ensures the boss is in an attackable state and activates the attack animation.
-     * - Sets a timeout to reset the attack state after 3 seconds.
-     */
-    bossAttack() {
-        if (!this.isAttacking && this.activateBoss()) {
-            this.isAttacking = true;
-            setTimeout(() => {
-                this.isAttacking = false;
-            }, 3000);
-        }
-    }
 
     /**
      * Displays the "Game Won" screen.

@@ -59,6 +59,16 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    bossHitCharacter() {
+        this.energy -= 10;
+
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
     characterMeetsEndboss() {
         if (!world || !world.character) {
             return false;
@@ -66,8 +76,13 @@ class MovableObject extends DrawableObject {
         return world.character.x > 1200;
     }
 
+
     activateBoss() {
-        return this.bossIsActivated = true;
+        if (!this.bossIsActivated) {
+            this.bossIsActivated = true;
+            console.log('Boss aktiviert!');
+        }
+        return this.bossIsActivated;
     }
 
     isHurt() {

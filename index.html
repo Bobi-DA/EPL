@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="./models/sounds.js"></script>
+    <script src="./models/device-orientation.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
     <script src="./models/statusbar.class.js"></script>
@@ -31,17 +32,17 @@
     <title>EL POLLO LOCO</title>
 </head>
 
-<body>
+<body onload="checkOrientationDevice()">
 
-    <div id="rotateMessage" class="d-none">
-        <img id="rotateImage" src="img/rotate.png" alt="">
+    <div id="orientation-warning" > <!-- rotateMessage class="d-none" -->
+        <img id="rotate-icon" src="img/rotate.png" alt=""> <!-- rotateImage -->
         <p class="text-turn-display">Turn your device to play!</p>
     </div>
 
-    <div id="game-container">
+    <div id="game-container"> <!-- gameContainer -->
         <canvas id="canvas" width="720px" height="480px"></canvas>
 
-        <div id="mobile-controls" class="d-none">
+        <div id="mobileControls" class="d-none">
             <div id="panelLeft">
                 <button id="leftButton">
                     < </button>
@@ -89,6 +90,7 @@
 
         <!-- Info -->
         <div id="infoScreenContainer" class="info-screen-container d-none">
+            <button onclick="backButton()" id="backButton" class="back-button">BACK</button>
             <h2>Impressum</h2>
             <p>Boban Jakovljevic<br />
                 Thomas-Reiter-Str. 11<br />63263 Neu-Isenburg</p>
@@ -148,7 +150,6 @@
             abweichen, wird an entsprechender Stelle ausdrücklich darauf hingewiesen. In diesem Falle gelten im
             jeweiligen Einzelfall die besonderen Nutzungsbedingungen.<p>Quelle: <a
                     href="https://www.fachanwalt.de/impressum-generator/">Link hier klicken</a></p>
-            <button onclick="backButton()" id="backButton" class="back-button">BACK</button>
         </div>
 
         <!-- Game Over -->

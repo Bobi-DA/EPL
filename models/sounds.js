@@ -14,7 +14,7 @@ const sounds = [
     new Audio('audio/male_hurt.mp3') //9
 ];
 
-let bgsound = false;
+let bgsound = Boolean(JSON.parse(loadDataToLocalStorage()));
 
 /**
  * Toggles the background sound in the game and updates the audio control buttons.
@@ -32,9 +32,18 @@ function soundPlay() {
         }
     });
 
+
     bgsound = !bgsound;
+    saveDataToLocalStorage(!bgsound);
 
     document.getElementById('audioOnBtn').classList.toggle('d-none', !bgsound);
     document.getElementById('audioOffBtn').classList.toggle('d-none', bgsound);
 }
 
+function saveDataToLocalStorage(bool) {
+    localStorage.setItem('backgroundsound', JSON.stringify(bool));
+}
+
+function loadDataToLocalStorage() {
+    return localStorage.getItem('backgroundsound');
+}

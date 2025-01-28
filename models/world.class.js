@@ -65,7 +65,10 @@ class World {
 
     checkCollisionsWithEndboss() {
         if (this.character.isColliding(this.endboss)) {
-            this.character.hit();
+            this.character.bossHitCharacter();
+            this.character.x -=100;
+            console.log('x: ', this.character.x);
+            
             this.statusBar.setPercentage(this.character.energy);
         }
     };
@@ -118,36 +121,80 @@ class World {
         }
     }
 
+    /**
+     * Draws all elements of the game, including the background, characters, enemies, and status bars.
+     * Delegates specific tasks to helper methods for clarity and modularity.
+     */
     draw() {
+        this.clearCanvas();
+        this.setCamera();
+        this.drawLevelObjects();
+        this.resetCamera();
+        this.drawStatusBars();
+        this.loopDraw();
+    }
+
+    /**
+     * Clears the entire canvas to prepare it for the next frame.
+     */
+    clearCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
 
+    /**
+     * Adjusts the camera position by translating the context based on the current `camera_x` value.
+     */
+    setCamera() {
         this.ctx.translate(this.camera_x, 0);
+    }
 
+    /**
+     * Draws all level-related objects, including background objects, clouds, coins, bottles,
+     * enemies, the end boss, the main character, and throwable objects.
+     */
+    drawLevelObjects() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
-
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.endboss);
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObject);
+    }
 
+    /**
+     * Resets the camera position by translating the context back to its original position.
+     */
+    resetCamera() {
         this.ctx.translate(-this.camera_x, 0);
+    }
+
+    /**
+     * Draws all status bars, including the character's health bar, coin status, and bottle status.
+     * If the end boss is active, its status bar is also drawn.
+     */
+    drawStatusBars() {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
         if (this.endboss.isStatusBarVisible) {
             this.addToMap(this.statusBarEndboss);
         }
-        this.ctx.translate(this.camera_x, 0);
-        this.ctx.translate(-this.camera_x, 0);
+    }
 
+    /**
+     * Creates a continuous rendering loop using `requestAnimationFrame`.
+     * Ensures that the `draw()` method is repeatedly called for smooth animation.
+     */
+    loopDraw() {
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
     }
+
+
 
     addObjectsToMap(objects) {
         objects.forEach(o => {

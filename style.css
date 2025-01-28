@@ -10,7 +10,6 @@ body {
     text-align: center;
     background-image: url('./img/background.webp');
     background-size: cover;
-
 }
 
 @font-face {
@@ -18,21 +17,22 @@ body {
     src: url('font/zabars.ttf') format('truetype');
 }
 
-#game-container {
+#gameContainer {
     position: relative;
     width: 720px;
     max-width: 100%;
 }
 
+
 #canvas {
-    border-radius: 8px;
+    /* border-radius: 8px; */
     display: block;
     width: 100%;
     background-color: #222;
     /* margin-bottom: 20px; */
 }
 
-#mobile-controls {
+#mobileControls {
     position: absolute;
     bottom: 10px;
     left: 0;
@@ -73,8 +73,10 @@ button:active {
     background: rgba(0, 0, 0, 0.8);
     padding: 20px;
     text-align: center;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    height: 80%;
 }
 
 .game-over-img,
@@ -82,6 +84,10 @@ button:active {
     width: 100%;
     max-width: 300px;
     margin-bottom: 20px;
+}
+
+.back-button {
+    display: flex;
 }
 
 .restart-button,
@@ -132,23 +138,24 @@ button:active {
 }
 
 .start-screen-img {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    /* border-top-left-radius: 8px; */
+    /* border-top-right-radius: 8px; */
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
 
 .info-screen-container {
+    scrollbar-width: none;
     width: 100%;
     height: 480px;
-    background-color: #e6d59f;
+    background-color: #fdffd2;
     position: absolute;
     top: 0%;
     z-index: 5;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     overflow: auto;
-    font-family: Arial, Helvetica, sans-serifS;
+    font-family: Times New Roman, Helvetica, sans-serifS;
 }
 
 .audio-btn {
@@ -162,7 +169,7 @@ button:active {
     position: absolute;
     top: 0%;
     /* background-color: #994409; */
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 100%;
 }
 
@@ -194,6 +201,7 @@ button:active {
     justify-content: center;
 }
 
+/* Rotation */
 #rotateMessage {
     position: absolute;
     z-index: 1;
@@ -219,10 +227,10 @@ button:active {
     }
 }
 
-
 .text-turn-display {
-    font-size: 4em;
+    font-size: 2em;
 }
+
 
 @media (min-width:769px) {
 
@@ -235,8 +243,10 @@ button:active {
         background: rgba(0, 0, 0, 0.8);
         padding: 20px;
         text-align: center;
-        border-radius: 10px;
+        /* border-radius: 10px; */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 80%;
+        height: 80%;
     }
 }
 
@@ -272,7 +282,7 @@ button:active {
     }
 }
 
-@media only screen and (max-width: 720px) {
+/* @media only screen and (max-width: 720px) {
 
     canvas {
         width: 100%;
@@ -283,5 +293,79 @@ button:active {
 
     canvas {
         height: 100vh;
+    }
+}
+ */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 720px;
+    height: 480px;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid white;
+}
+
+#orientation-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#rotate-icon {
+    width: 60%;
+    animation: rotate 5s infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(90deg);
+    }
+}
+
+@media (max-width: 1023px) {
+    #game-container {
+        width: 100vw;
+        height: calc(100vw * (480 / 720));
+        max-height: 100vh;
+        max-width: calc(100vh * (720 / 480));
+    }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+    #game-container {
+        display: none;
+    }
+
+    #orientation-warning {
+        display: flex;
     }
 }

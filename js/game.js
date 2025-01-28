@@ -8,31 +8,12 @@ let gameStarted = false;
  */
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard); 
+    world = new World(canvas, keyboard);
 
-    checkOrientation();
     keyPressButton();
     keyPressTouch();
-    checkDevice();
 }
 
-/**
- * Checks the device type and toggles mobile controls visibility based on screen width.
- */
-function checkDevice() {
-    const isMobile = window.innerWidth <= 768;
-    const controls = document.getElementById('mobile-controls');
-
-    if (isMobile) {
-        controls.classList.remove('d-none');
-    } else {
-        controls.classList.add('d-none');
-    }
-}
-
-// Event listeners to handle device resizing and initial load.
-window.addEventListener('resize', checkDevice);
-window.addEventListener('load', checkDevice);
 
 /**
  * Starts the game by initializing levels and the game world,
@@ -43,8 +24,7 @@ function startGame() {
     init();
     document.getElementById('startScreenContainer').classList.add('d-none');
     document.getElementById('soundContainer').classList.remove('d-none');
-    sounds[3].play();
-    bgsound = true;
+    soundPlay();
 }
 
 /**
@@ -52,6 +32,7 @@ function startGame() {
  */
 function infoButton() {
     document.getElementById('infoScreenContainer').classList.remove('d-none');
+    document.getElementById('startInfoBtnContainer').classList.add('d-none');
 }
 
 /**
@@ -59,13 +40,17 @@ function infoButton() {
  */
 function backButton() {
     document.getElementById('infoScreenContainer').classList.add('d-none');
+    document.getElementById('startInfoBtnContainer').classList.remove('d-none');
+
 }
 
 /**
  * Reloads the current page to restart the game.
  */
 function homeButton() {
-    location.reload();
+    document.getElementById('startScreenContainer').classList.remove('d-none');
+    document.getElementById('gameOverContainer').classList.add('d-none');
+    document.getElementById('winGameContainer').classList.add('d-none');
 }
 
 /**
@@ -80,6 +65,7 @@ function restartGame() {
     document.getElementById('winGameContainer').classList.add('d-none');
     document.getElementById('audioOffBtn').classList.add('d-none');
     document.getElementById('audioOnBtn').classList.remove('d-none');
+    bgsound = Boolean(JSON.parse(loadDataToLocalStorage()));
     startGame();
 }
 
@@ -161,32 +147,4 @@ function keyPressTouch() {
     });
 }
 
-/**
- * Checks the screen orientation and toggles the orientation message accordingly.
- */
-function checkOrientation() {
-    const rotateMessage = document.getElementById('rotateMessage');
-    if (window.matchMedia("(orientation: portrait)").matches) {
-        rotateMessage.classList.remove('d-none');
-    } else if (window.matchMedia("(orientation: landscape)").matches) {
-        rotateMessage.classList.add('d-none');
-    }
-}
 
-// Event listener for orientation changes
-window.addEventListener('resize', checkOrientation);
-
-/**
- * Displays or hides the rotation message based on screen dimensions.
- */
-function orientationDisplay() {
-    const widthScreen = window.innerWidth;
-    const heightScreen = window.innerHeight;
-    const rotateMessage = document.getElementById('rotateMessage');
-
-    if (widthScreen < heightScreen) {
-        rotateMessage.classList.remove('d-none');
-    } else {
-        rotateMessage.classList.add('d-none');
-    }
-}

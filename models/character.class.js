@@ -9,7 +9,7 @@ class Character extends MovableObject {
     offset = {
         top: 100,
         left: 20,
-        right: 30,
+        right: 20,
         bottom: 30
     };
 
@@ -121,7 +121,6 @@ class Character extends MovableObject {
     */
     handleMovement() {
         sounds[0].pause();
-
         if (!bgsound) {
             sounds[0].pause();
             sounds[0].currentTime = 0;
